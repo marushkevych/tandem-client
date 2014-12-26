@@ -1,6 +1,5 @@
-var StreamingClient = require('./StreamingClient');
 
-StreamingClient.connect(function(stream) {
+require('./Client').connect(function(connection) {
 
     process.stdout.write("Client connected, please enter your request. Enter 'exit' to quit\n");
 
@@ -12,31 +11,21 @@ StreamingClient.connect(function(stream) {
             return;
         }
         chunk = chunk.trim();
+
         if(chunk == 'exit'){
-            stream.end(null, null, function(){
-                process.exit(0);
-            });
+            connection.end();
             return;
         }
-        stream.write(chunk);
-    });
 
-    process.stdin.on('end', function() {
-        process.stdout.write('end\n');
-        stream.end();
-    });
-
-
-
-    stream.on('readable', function() {
-        var response;
-        while (response = stream.read()) {
+        connection.request(chunk, function(response){
             process.stdout.write('response: ' + response + '\n');
-        }
+        });
     });
 
-    stream.on('close', function() {
+
+    connection.on('close', function() {
         console.log('Client closed');
+        process.exit(0);
     });
 
 });
