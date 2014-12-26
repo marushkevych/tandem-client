@@ -5,7 +5,7 @@
  * Connection api:
  * - request(message, callback) - sends request and passes response to callback function
  *      
- * - end() - ends connection (this will reailt in 'close' event, see below)
+ * - end() - request connection to close (this will result in 'close' event, see below)
  * 
  * - emits 'close' event:
  * 
