@@ -10,7 +10,7 @@
  * - emits 'close' event:
  * 
  * Example:
- * require('./Client').connect(function(connection) {
+ * require('./Client').connect(port, host, function(connection) {
  *      connection.request("Hello", function(response){
  *          console.log('got response', response);
  *      });
@@ -35,7 +35,14 @@ var EventEmitter = require('events').EventEmitter;
 
 exports.connect = connect;
 
-function connect(connectionListener) {
+/**
+ * 
+ * @param {Number} port
+ * @param {String} host
+ * @param {Function} connectionListener
+ * @returns {Connection}
+ */
+function connect(port, host, connectionListener) {
     var socket = new net.Socket();
     var decoder = createDecoder();
 
@@ -48,7 +55,7 @@ function connect(connectionListener) {
         }
     });
 
-    socket.connect(8124, function() {
+    socket.connect(port, host, function() {
         console.log('Client Connected');
         connectionListener(new Connection(socket, decoder));
     });

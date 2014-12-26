@@ -1,5 +1,5 @@
 
-require('./Client').connect(function(connection) {
+require('./Client').connect(8124, 'localhost', function(connection) {
 
     process.stdout.write("Client connected, please enter your request. Enter 'exit' to quit\n");
 
