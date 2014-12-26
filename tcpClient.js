@@ -3,36 +3,43 @@ var Concentrate = require("concentrate");
 var encoder = require('./encoder');
 var createDecoder = require('./decoder');
  
-var socket = new net.Socket();
-socket.connect(8124, function() {
-	console.log('Connected');
+module.exports = function create(connectionListener){ 
     
-    var data = encoder.encode("Hello");
-
-	socket.write(data);
-});
-
-var decoder = createDecoder();
- 
-socket.on('data', function(data) {
-    try {
-        decoder.write(data);
-    } catch (e) {
-        console.log(e.message)
-        socket.destroy();
-    }
-});
- 
-socket.on('close', function() {
-	console.log('Connection closed');
-});
-
-decoder.on("readable", function() {
-    var response;
-
-    while (response = decoder.read()) {
-        console.log('got respose', response);
+    var socket = new net.Socket();
+    var decoder = createDecoder();
+    var responseListener;
+    
+    function send(message, callback){
+        responseListener = callback;
+        socket.write(encoder.encode(message));
     }
     
-    socket.destroy();
-});
+    
+    socket.connect(8124, function() {
+        console.log('Connected');
+        connectionListener(send);
+    });
+
+
+    socket.on('data', function(data) {
+        try {
+            decoder.write(data);
+        } catch (e) {
+            console.log(e.message)
+            socket.destroy();
+        }
+    });
+
+    socket.on('close', function() {
+        console.log('Connection closed');
+    });
+
+    decoder.on("readable", function() {
+        var response;
+
+        while (response = decoder.read()) {
+            responseListener(response);
+        }
+
+    });
+};

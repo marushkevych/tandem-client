@@ -28,7 +28,7 @@ var server = net.createServer(function(socket) { //'connection' listener
             // process request
 
             // write response
-            socket.write(encoder.encode("Goodbuy!"));
+            socket.write(encoder.encode("Goodbuy, "+ request));
         }
     });
 
