@@ -4,9 +4,10 @@ var crc32 = require('buffer-crc32');
 module.exports = function createDecoder(){
     
     var decoder = Dissolve().loop(function(end) {
+        
         // first read header and header checksum
         this.buffer('header', 24).uint32("checkSumHeader").tap(function() {
-
+            
             // then check header checksum
             if (this.vars.checkSumHeader != crc32.unsigned(this.vars.header)) {
                 console.log('provided header crc', this.vars.checkSumHeader);

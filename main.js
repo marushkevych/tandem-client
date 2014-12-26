@@ -1,10 +1,21 @@
-var createClient = require('./tcpClient');
+var PosClient = require('./PosClient');
 
-createClient(function(send){
+PosClient.connect(function(stream){
+    stream.on('readable', function(){
+        var response;
+        while (response = stream.read()) {
+            console.log("main got response", response)
+        }
+    });
+    
+    stream.on('close', function() {
+        console.log('Client closed');
+    });
+    
+    
     for(var i=0; i<10;i++){
-        send('hello ' + i, function(response){
-            console.log('main got responce', response);
-        });
-        
+        stream.write("hello" + i);
     }
-})
+    
+        
+});

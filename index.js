@@ -14,7 +14,7 @@ var server = net.createServer(function(socket) { //'connection' listener
         try {
             decoder.write(data);
         } catch (e) {
-            console.log(e.message)
+            console.log("Decoding error, dropping connection", message)
             socket.destroy();
         }
     });
