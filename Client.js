@@ -1,3 +1,29 @@
+/**
+ * Usage:
+ * this module exoprts connect function, which will notify the coller with connection object when connected.
+ * 
+ * Connection api:
+ * - request(message, callback) - sends request and passes response to callback function
+ *      
+ * - end() - ends connection (this will reailt in 'close' event, see below)
+ * 
+ * - emits 'close' event:
+ * 
+ * Example:
+ * require('./Client').connect(function(connection) {
+ *      connection.request("Hello", function(response){
+ *          console.log('got response', response);
+ *      });
+ * 
+ *      connection.on('close', function() {
+ *          process.exit(0);
+ *      });
+ * 
+ *      connection.end();
+ * }
+ * 
+ */
+
 var net = require('net');
 var Concentrate = require("concentrate");
 var encoder = require('./encoder');
@@ -28,7 +54,10 @@ function connect(connectionListener) {
     });
 }
 
-// Class Connection extends  EventEmitter
+
+/**
+ * Class Connection extends  EventEmitter
+ */
 util.inherits(Connection, EventEmitter);
 function Connection(socket, decoder){
     EventEmitter.call(this);
@@ -42,7 +71,6 @@ function Connection(socket, decoder){
     });
     
 }
-
 
 Connection.prototype.request = function(message, callback) {
     this.socket.write(encoder.encode(message));
