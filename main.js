@@ -1,21 +1,42 @@
-var PosClient = require('./PosClient');
+var StreamingClient = require('./StreamingClient');
 
-PosClient.connect(function(stream){
-    stream.on('readable', function(){
+StreamingClient.connect(function(stream) {
+
+    process.stdout.write("Client connected, please enter your request. Enter 'exit' to quit\n");
+
+    process.stdin.setEncoding('utf8');
+
+    process.stdin.on('readable', function() {
+        var chunk = process.stdin.read();
+        if (chunk == null) {
+            return;
+        }
+        chunk = chunk.trim();
+        if(chunk == 'exit'){
+            stream.end(null, null, function(){
+                process.exit(0);
+            });
+            return;
+        }
+        stream.write(chunk);
+    });
+
+    process.stdin.on('end', function() {
+        process.stdout.write('end\n');
+        stream.end();
+    });
+
+
+
+    stream.on('readable', function() {
         var response;
         while (response = stream.read()) {
-            console.log("main got response", response)
+            process.stdout.write('response: ' + response + '\n');
         }
     });
-    
+
     stream.on('close', function() {
         console.log('Client closed');
     });
-    
-    
-    for(var i=0; i<10;i++){
-        stream.write("hello" + i);
-    }
-    
-        
+
 });

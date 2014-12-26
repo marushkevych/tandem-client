@@ -5,14 +5,14 @@ var createDecoder = require('./decoder');
 
 var util = require('util');
 var Transform = require('stream').Transform;
-util.inherits(PosClient, Transform);
+util.inherits(StreamingClient, Transform);
 
 exports.connect = connect;
 
-function connect(connectionListener){
+function connect(connectionListener) {
     var socket = new net.Socket();
     var decoder = createDecoder();
-    
+
     socket.on('data', function(data) {
         try {
             decoder.write(data);
@@ -21,44 +21,48 @@ function connect(connectionListener){
             socket.destroy();
         }
     });
-    
 
-    
+
     socket.connect(8124, function() {
         console.log('Client Connected');
-        connectionListener(new PosClient(socket, decoder));
+        connectionListener(new StreamingClient(socket, decoder));
     });
 }
 
 /**
- * PosClient constuctor
+ * StreamingClient constuctor
  * @param {type} socket
  * @param {type} decoder - created with './decoder' factory
- * @returns {PosClient}
+ * @returns {StreamingClient}
  */
-function PosClient(socket, decoder) {
-    if (!(this instanceof PosClient))
-        return new PosClient();
-    
+function StreamingClient(socket, decoder) {
+    if (!(this instanceof StreamingClient))
+        return new StreamingClient();
+
     Transform.call(this);
-    this.setEncoding('utf8')
+    this.setEncoding('utf8');
     this.socket = socket;
     var self = this;
-    
+
     decoder.on("readable", function() {
         var response;
         while (response = decoder.read()) {
             self.push(response);
         }
     });
-    
+
     socket.on('close', function() {
         console.log('Client Disconnected');
         self.emit('close');
     });
+    
+    this.on('end', function() {
+        console.log('Closing socket');
+        socket.destroy();
+    });
 }
 
-PosClient.prototype._transform = function _transform(message, encoding, done){
+StreamingClient.prototype._transform = function _transform(message, encoding, done) {
     this.socket.write(encoder.encode(message));
     done();
 };
