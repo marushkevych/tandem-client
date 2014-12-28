@@ -74,7 +74,8 @@ function Connection(socket, decoder){
     
     socket.on('close', function() {
         console.log('Client Disconnected');
-        self.emit('close');
+        if(this.ended !== true)
+            self.emit('close');
     });
     
 }
@@ -90,6 +91,7 @@ Connection.prototype.request = function(message, callback) {
     });
 };
 Connection.prototype.end = function(){
+    this.ended = true;
     this.socket.destroy();
 };
 
