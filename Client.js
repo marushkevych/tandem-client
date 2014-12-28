@@ -74,7 +74,7 @@ function Connection(socket, decoder){
     
     socket.on('close', function() {
         console.log('Client Disconnected');
-        if(this.ended !== true)
+        if(self.ended !== true)
             self.emit('close');
     });
     
