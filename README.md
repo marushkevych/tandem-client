@@ -1,12 +1,13 @@
 node-tcp-listener
 =================
+> Proprietary binary protocol over TCP
 
-Install: 
+#### Install: 
 ```
 npm install marushkevych/node-tcp-listener
 ```
 
-Run Server:
+#### Run Server:
 ```js
 var listener = require('node-tcp-listener');
 var server = listener.createServer();
@@ -16,7 +17,7 @@ server.listen(18888, localhost, function() {
 });
 ```
 
-Run Client:
+#### Run Client:
 ```js
 var listener = require('node-tcp-listener');
 var client = listener.createClient(18888, 'localhost', function(connection) {
