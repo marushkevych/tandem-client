@@ -5,7 +5,10 @@ var encoder = require('./encoder');
 
 module.exports = createServer;
         
-function createServer(){
+function createServer(processor){
+    // default request processor will echo the request
+    processor = processor || {process: function(request){return request}};
+    
     var server = net.createServer(function(socket) { //'connection' listener
         console.log('client connected');
         var decoder = createDecoder();
@@ -28,9 +31,9 @@ function createServer(){
                 console.log('got request', request);
 
                 // process request
-
+                var response = processor.process(request);
                 // write response
-                socket.write(encoder.encode('<GetLoyaltyOnlineStatusResponse><PromptForLoyaltyFlag value="yes"/></GetLoyaltyOnlineStatusResponse>'));
+                socket.write(encoder.encode(response));
             }
         });
 
