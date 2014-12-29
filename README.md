@@ -20,7 +20,7 @@ server.listen(18888, localhost, function() {
 #### Run Client:
 ```js
 var listener = require('node-tcp-listener');
-var client = listener.createClient(18888, 'localhost', function(connection) {
+listener.createClient(18888, 'localhost', function(connection) {
 
     // send request and recieve response
     connection.request("Hello", function(response){
