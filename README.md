@@ -38,4 +38,5 @@ listener.createClient(18888, 'localhost', function(connection) {
 
 ```
 
+also see examples folder for more client implementations
 
