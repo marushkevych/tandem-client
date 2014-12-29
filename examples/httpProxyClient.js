@@ -1,4 +1,5 @@
 var listener = require('node-tcp-listener');
+var client = listener.createClient();
 
 /**
  * Connect middleware, will proxy http request payload to tcp listener
@@ -19,7 +20,7 @@ module.exports = function(req, res, next) {
         req.on('end', function() {
             try {
                 // process request
-                listener.createClient(18888, 'localhost', function(connection) {
+                client.connect(18888, 'localhost', function(connection) {
                     connection.request(body, function(response){
                         console.log('got response', response);
                         res.write(response);

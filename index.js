@@ -1,4 +1,6 @@
 
 exports.createServer = require('./server.js');
 
-exports.createClient = require('./client.js');
+exports.createClient = function(){
+    return require('./client.js');
+};

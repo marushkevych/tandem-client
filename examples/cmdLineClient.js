@@ -1,5 +1,6 @@
 
-require('../index').createClient(18888, 'localhost', function(connection) {
+var client = require('../index').createClient();
+client.connect(18888, 'localhost', function(connection) {
 
     process.stdout.write("Client connected, please enter your request. Enter 'exit' to quit\n");
 
