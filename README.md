@@ -20,7 +20,9 @@ server.listen(18888, localhost, function() {
 #### Run Client:
 ```js
 var listener = require('node-tcp-listener');
-listener.createClient(18888, 'localhost', function(connection) {
+var client = listener.createClient();
+
+client.connect(18888, 'localhost', function(connection) {
 
     // send request and recieve response
     connection.request("Hello", function(response){
@@ -37,6 +39,11 @@ listener.createClient(18888, 'localhost', function(connection) {
 });
 
 ```
-
 also see examples folder for more client implementations
+
+#### Client Connection API:
+- Connection.request(message, callback) - sends request and passes response to callback function
+- Connection.end() - request connection to close (this will result in 'close' event, see below)
+- emits 'close' event when tcp connection was closed before connection.end() was called
+
 
