@@ -10,7 +10,14 @@ npm install marushkevych/node-tcp-listener
 #### Run Server:
 ```js
 var listener = require('node-tcp-listener');
-var server = listener.createServer();
+
+// request processor
+function processor(request){
+    // process the request and return String response
+    return "Hello " + request;
+}
+
+var server = listener.createServer(processor);
 
 server.listen(18888, localhost, function() {
     console.log('server bound');
