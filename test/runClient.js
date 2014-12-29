@@ -1,5 +1,5 @@
 
-require('./Client').connect(8124, 'localhost', function(connection) {
+require('../index').createClient(18888, 'localhost', function(connection) {
 
     process.stdout.write("Client connected, please enter your request. Enter 'exit' to quit\n");
 
@@ -14,7 +14,7 @@ require('./Client').connect(8124, 'localhost', function(connection) {
 
         if(chunk == 'exit'){
             connection.end();
-            return;
+            process.exit(0);
         }
 
         connection.request(chunk, function(response){
@@ -24,7 +24,7 @@ require('./Client').connect(8124, 'localhost', function(connection) {
 
 
     connection.on('close', function() {
-        console.log('Client closed');
+        console.log('Sorry connection is lost, exiting...');
         process.exit(0);
     });
 

@@ -33,7 +33,7 @@ var util = require('util');
 var EventEmitter = require('events').EventEmitter;
 
 
-exports.connect = connect;
+module.exports = createClient;
 
 /**
  * 
@@ -42,7 +42,7 @@ exports.connect = connect;
  * @param {Function} connectionListener
  * @returns {Connection}
  */
-function connect(port, host, connectionListener) {
+function createClient(port, host, connectionListener) {
     var socket = new net.Socket();
     var decoder = createDecoder();
 
