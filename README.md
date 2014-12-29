@@ -32,7 +32,7 @@ client.connect(18888, 'localhost', function(connection) {
         connection.end();
     });
     
-    // 'close' event - emitted when tcp connection was closed before connection.end() was called
+    // 'close' event - emitted if tcp connection was closed before connection.end() was called
     connection.on('close', function() {
         console.log('Sorry connection is lost, exiting...');
     });
