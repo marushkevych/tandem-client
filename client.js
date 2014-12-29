@@ -1,13 +1,13 @@
 /**
  * Usage:
- * this module exoprts connect function, which will notify the coller with connection object when connected.
+ * this module exoprts connect function, which will notify the coller with Connection object when connected.
  * 
  * Connection api:
- * - request(message, callback) - sends request and passes response to callback function
+ * - connection.request(message, callback) - sends request and passes response to callback function
  *      
- * - end() - request connection to close (this will result in 'close' event, see below)
+ * - connection.end() - request connection to close
  * 
- * - emits 'close' event:
+ * - emits 'close' event if tcp connection was closed before connection.end() was called
  * 
  * Example:
  * require('./Client').connect(port, host, function(connection) {
