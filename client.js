@@ -33,7 +33,7 @@ var util = require('util');
 var EventEmitter = require('events').EventEmitter;
 
 
-module.exports = connect;
+exports.connect = connect;
 
 /**
  * 
