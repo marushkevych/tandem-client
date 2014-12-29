@@ -11,7 +11,13 @@ npm install marushkevych/node-tcp-listener
 ```js
 var listener = require('node-tcp-listener');
 
-// request processor
+/**
+ * Request processor function is injected into server to handle the decoded request string.
+ * It should return the resulting response string.
+ *
+ * @param {String} request
+ * @returns {String} response
+ */
 function processor(request){
     // process the request and return String response
     return "Hello " + request;
