@@ -1,6 +1,6 @@
 node-tcp-listener
 =================
-> Proprietary binary protocol over TCP
+> Server and Client that communicate with proprietary binary protocol over TCP
 
 #### Install: 
 ```
