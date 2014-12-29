@@ -44,6 +44,6 @@ also see examples folder for more client implementations
 #### Client Connection API:
 - ```Connection.request(message, callback)``` - sends request and passes response to callback function
 - ```Connection.end()``` - request connection to close (this will result in 'close' event, see below)
-- emits ```close``` event when tcp connection was closed before connection.end() was called
+- emits ```close``` event if tcp connection was closed before connection.end() was called
 
 
