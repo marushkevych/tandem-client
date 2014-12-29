@@ -5,9 +5,9 @@ var encoder = require('./encoder');
 
 module.exports = createServer;
         
-function createServer(processor){
+function createServer(process){
     // default request processor will echo the request
-    processor = processor || {process: function(request){return request}};
+    process = process || function(request){return request};
     
     var server = net.createServer(function(socket) { //'connection' listener
         console.log('client connected');
@@ -31,7 +31,7 @@ function createServer(processor){
                 console.log('got request', request);
 
                 // process request
-                var response = processor.process(request);
+                var response = process(request);
                 // write response
                 socket.write(encoder.encode(response));
             }
