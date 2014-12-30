@@ -10,7 +10,7 @@ npm install pcats-listener
 
 #### Run Server:
 ```js
-var listener = require('node-tcp-listener');
+var listener = require('pcats-listener');
 
 /**
  * Request processor function is injected into server to handle requests.
@@ -32,7 +32,7 @@ server.listen(18888, localhost, function() {
 
 #### Run Client:
 ```js
-var listener = require('node-tcp-listener');
+var listener = require('pcats-listener');
 var client = listener.createClient();
 
 client.connect(18888, 'localhost', function(connection) {
