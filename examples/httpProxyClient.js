@@ -1,4 +1,4 @@
-var listener = require('node-tcp-listener');
+var listener = require('pcats-listener');
 var client = listener.createClient();
 
 /**
