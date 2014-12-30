@@ -54,7 +54,7 @@ client.connect(18888, 'localhost', function(connection) {
 ```
 also see examples folder for more client implementations
 
-#### Client Connection API:
+##### Client Connection API:
 - ```Connection.request(message, callback)``` - sends request and passes response to callback function
 - ```Connection.end()``` - request connection to close
 - emits ```close``` event if tcp connection was closed before connection.end() was called
