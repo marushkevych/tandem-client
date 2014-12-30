@@ -1,4 +1,4 @@
-node-tcp-listener
+pcats-listener
 =================
 > TCP listener, provides message decoding and encoding using proprietary binary protocol. ```listener.createServer(processor)``` takes processor function that will be passed decoded message String and expected to return the response String.
 Also a Client is provided for testing and simulation.
