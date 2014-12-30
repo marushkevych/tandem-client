@@ -5,7 +5,7 @@ Also a Client is provided for testing and simulation.
 
 #### Install: 
 ```
-npm install marushkevych/node-tcp-listener
+npm install pcats-listener
 ```
 
 #### Run Server:
