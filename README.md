@@ -1,6 +1,7 @@
 node-tcp-listener
 =================
-> Server and Client that communicate with proprietary binary protocol over TCP
+> TCP listener, provides message decoding and encoding using proprietary binary protocol. ```listener.createServer(processor)``` takes processor function that will be passed decoded message String and expected to return the response String.
+Also a Client is provided for testing and simulation.
 
 #### Install: 
 ```
