@@ -1,21 +1,21 @@
 {
-  "name": "node-tcp-listener",
-  "version": "0.0.0",
-  "description": "Node prototype for the POS listener",
+  "name": "pcats-listener",
+  "version": "1.0.0",
+  "description": "Node prototype for the pcats listener",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/marushkevych/node-tcp-listener.git"
+    "url": "https://github.com/marushkevych/pcats-listener.git"
   },
-  "author": "ANdrey Marushkevych marushkevych@gmail.com (marushkevych.com)",
+  "author": "Andrey Marushkevych marushkevych@gmail.com (marushkevych.com)",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/marushkevych/node-tcp-listener/issues"
+    "url": "https://github.com/marushkevych/pcats-listener/issues"
   },
-  "homepage": "https://github.com/marushkevych/node-tcp-listener",
+  "homepage": "https://github.com/marushkevych/pcats-listener",
   "dependencies": {
     "dissolve": "^0.3.3",
     "buffer-crc32": "^0.2.5",
