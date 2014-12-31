@@ -3,21 +3,26 @@
  * this module exoprts connect function, which will notify the coller with Connection object when connected.
  * 
  * Connection api:
- * - connection.request(message, callback) - sends request and passes response to callback function
+ * - connection.request(message) - sends request, and will emit 'response' event when response is received
  *      
  * - connection.end() - request connection to close
+ * 
+ * - emits 'response' event when response is received
  * 
  * - emits 'close' event if tcp connection was closed before connection.end() was called
  * 
  * Example:
  * require('./Client').connect(port, host, function(connection) {
- *      connection.request("Hello", function(response){
+ * 
+ *      connection.on('response', function(response){
  *          console.log('got response', response);
  *      });
  * 
  *      connection.on('close', function() {
  *          process.exit(0);
  *      });
+ *      
+ *      connection.request("Hello");
  * 
  *      connection.end();
  * });
@@ -78,17 +83,17 @@ function Connection(socket, decoder){
             self.emit('close');
     });
     
+    decoder.on("readable", function() {
+        var response;
+        while (response = decoder.read()) {
+            self.emit('response', response);
+        }
+    });    
+    
 }
 
-Connection.prototype.request = function(message, callback) {
+Connection.prototype.request = function(message) {
     this.socket.write(encoder.encode(message));
-    var self = this;
-    this.decoder.on("readable", function() {
-        var response;
-        while (response = self.decoder.read()) {
-            callback(response);
-        }
-    });
 };
 Connection.prototype.end = function(){
     this.ended = true;

@@ -18,27 +18,24 @@ module.exports = function(req, res, next) {
         })
 
         req.on('end', function() {
-            try {
-                // process request
-                client.connect(18888, 'localhost', function(connection) {
-                    connection.request(body, function(response){
-                        console.log('got response', response);
-                        res.write(response);
-                        res.end();
-                        connection.end();
-                    });
-                    
-                    connection.on('close', function(){
-                        console.log("Server dropped connection")
-                        res.statusCode = 400;
-                        return res.end("Server dropped connection");
-                    });
+            // process request
+            client.connect(18888, 'localhost', function(connection) {
+                
+                connection.on('response', function(response) {
+                    console.log('got response', response);
+                    res.write(response);
+                    res.end();
+                    connection.end();
                 });
-            } catch (er) {
-                // uh oh!  bad json!
-                res.statusCode = 400;
-                return res.end('error: ' + er.message);
-            }
+
+                connection.on('close', function(){
+                    console.log("Server dropped connection")
+                    res.statusCode = 400;
+                    return res.end("Server dropped connection");
+                });
+                
+                connection.request(body);
+            });
 
         });
 
