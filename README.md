@@ -37,26 +37,31 @@ var client = listener.createClient();
 
 client.connect(18888, 'localhost', function(connection) {
 
-    // send request and recieve response
-    connection.request("Hello", function(response){
-        console.log('got response: ' + response);
+    // 'response' event
+    connection.on('response', function(response){
+        console.log('got response', response);
         
         // disconnect
         connection.end();
     });
-    
+
     // 'close' event - emitted if tcp connection was closed before connection.end() was called
     connection.on('close', function() {
         console.log('Sorry connection is lost, exiting...');
     });
+
+    // send request
+    connection.request("Hello");
+
 });
 
 ```
 also see examples folder for more client implementations
 
 ##### Client Connection API:
-- ```Connection.request(message, callback)``` - sends request and passes response to callback function
-- ```Connection.end()``` - request connection to close
-- emits ```close``` event if tcp connection was closed before connection.end() was called
+- connection.request(message) - sends request. connection will emit 'response' event when response is received.
+- connection.end() - request connection to close
+- emits 'response' event when response is received
+- emits 'close' event if tcp connection was closed before connection.end() was called
 
 
