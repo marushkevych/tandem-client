@@ -35,7 +35,11 @@ server.listen(18888, localhost, function() {
 var listener = require('pcats-listener');
 var client = listener.createClient();
 
-client.connect(18888, 'localhost', function(connection) {
+client.connect(18888, 'localhost', function(err, connection) {
+    if(err){
+        // handle connection error
+        return;
+    }
 
     // 'response' event
     connection.on('response', function(response){
