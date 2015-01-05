@@ -19,7 +19,13 @@ module.exports = function(req, res, next) {
 
         req.on('end', function() {
             // process request
-            client.connect(18888, 'localhost', function(connection) {
+            client.connect(18888, 'localhost', function(err, connection) {
+                
+                if(err){
+                    console.log("Falied connecting to listener", host+":"+port, err.message)
+                    res.statusCode = 400;
+                    return res.end('Falied connecting to listener: ' + err.message);
+                }                
                 
                 connection.on('response', function(response) {
                     console.log('got response', response);
