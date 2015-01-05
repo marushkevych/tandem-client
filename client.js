@@ -60,9 +60,13 @@ function connect(port, host, connectionListener) {
         }
     });
 
+    socket.on('error', function(error) {
+        connectionListener(error);
+    });
+
     socket.connect(port, host, function() {
         console.log('Client Connected');
-        connectionListener(new Connection(socket, decoder));
+        connectionListener(null, new Connection(socket, decoder));
     });
 }
 
