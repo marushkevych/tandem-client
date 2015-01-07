@@ -31,9 +31,10 @@ function createServer(process){
                 console.log('got request', request);
 
                 // process request
-                var response = process(request);
-                // write response
-                socket.write(encoder.encode(response));
+                process(request, function(response){
+                    // write response
+                    socket.write(encoder.encode(response));
+                });
             }
         });
 
