@@ -96,8 +96,10 @@ function Connection(socket, decoder){
     
 }
 
-Connection.prototype.request = function(message) {
-    this.socket.write(encoder.encode(message));
+Connection.prototype.request = function(message, callback) {
+    this.socket.write(encoder.encode(message), null, function(){
+        if(callback) callback();
+    });
 };
 Connection.prototype.end = function(){
     this.ended = true;

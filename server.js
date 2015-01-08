@@ -34,7 +34,11 @@ function createServer(process){
                 // process request
                 Q.when(process(request), function(response){
                     // write response
-                    socket.write(encoder.encode(response));
+                    if(response){
+                        socket.write(encoder.encode(response));
+                    }else{
+                        console.log('no response')
+                    }
                 }, function(error){
                     console.log("Dropping connection, processing error:", error);
                     socket.destroy();              
