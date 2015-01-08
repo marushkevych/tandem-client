@@ -2,6 +2,7 @@
 var net = require('net');
 var createDecoder = require('./decoder');
 var encoder = require('./encoder');
+var Q = require('q');
 
 module.exports = createServer;
         
@@ -20,7 +21,7 @@ function createServer(process){
             try {
                 decoder.write(data);
             } catch (e) {
-                console.log("Decoding error, dropping connection", e.message);
+                console.log("Dropping connection, decoding error:", e);
                 socket.destroy();
             }
         });
@@ -31,9 +32,12 @@ function createServer(process){
                 console.log('got request', request);
 
                 // process request
-                process(request, function(response){
+                Q.when(process(request), function(response){
                     // write response
                     socket.write(encoder.encode(response));
+                }, function(error){
+                    console.log("Dropping connection, processing error:", error);
+                    socket.destroy();              
                 });
             }
         });
