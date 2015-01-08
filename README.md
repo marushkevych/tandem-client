@@ -67,7 +67,7 @@ client.connect(18888, 'localhost', function(err, connection) {
 also see examples folder for more client implementations
 
 ##### Client Connection API:
-- connection.request(message) - sends request. connection will emit 'response' event when response is received.
+- connection.request(message, [callback]) - sends request. connection will emit 'response' event when response is received. The optional callback parameter will be executed when the data is finally written out - this may not be immediately
 - connection.end() - request connection to close
 - emits 'response' event when response is received
 - emits 'close' event if tcp connection was closed before connection.end() was called
