@@ -2,7 +2,8 @@ pcats-listener
 =================
 > TCP listener, provides message decoding and encoding using proprietary binary protocol.
 
->```listener.createServer(processor)``` takes processor function that will be passed decoded request String and expected to return the response value or response promise.
+> Request processor function is injected into server to handle requests: ```listener.createServer(processor)``` 
+Processor function will be called with decoded request String and expected to return the response String or response Promise.
 
 > Also a Client is provided for testing and simulation.
 
