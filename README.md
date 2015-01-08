@@ -1,7 +1,10 @@
 pcats-listener
 =================
-> TCP listener, provides message decoding and encoding using proprietary binary protocol. ```listener.createServer(processor)``` takes processor function that will be passed decoded request String responseListener function (see 'Run Server' example below).
-Also a Client is provided for testing and simulation.
+> TCP listener, provides message decoding and encoding using proprietary binary protocol.
+
+>```listener.createServer(processor)``` takes processor function that will be passed decoded request String and expected to return the response value or response promise.
+
+> Also a Client is provided for testing and simulation.
 
 #### Install: 
 ```
@@ -16,12 +19,11 @@ var listener = require('pcats-listener');
  * Request processor function is injected into server to handle requests.
  *
  * @param {String} request
- * @param {Function} responseListener - should be called wiht response string
+ * @returns {Promise} response or {String} response
  */
-function processor(request, responseListener){
-    // process the request and pass response to callback function
-    var response = "Hello " + request
-    responseListener(response);
+function processor(request){
+    // process the request and return response
+    return "Hello " + request;
 }
 
 var server = listener.createServer(processor);
