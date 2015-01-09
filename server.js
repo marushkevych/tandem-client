@@ -48,6 +48,17 @@ function createServer(process){
 
     });   
     
+    server.on('error', function(e) {
+        if (e.code == 'EADDRINUSE') 
+        {
+            console.log('Address in use, exiting...');
+        }
+        else
+        {
+            console.log("Ooops! Server exiting due to an error:", e);
+        }
+    });    
+    
     return server;
 };
 
