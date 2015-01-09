@@ -59,6 +59,10 @@ function createServer(process){
         }
     });    
     
+    server.on('listening', function(e) {
+        console.log('Listening on', server.address());
+    });     
+    
     return server;
 };
 
