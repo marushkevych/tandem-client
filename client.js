@@ -99,8 +99,9 @@ function Connection(socket, ISOParser) {
     ISOParser.on("readable", function () {
         var response;
         while (response = ISOParser.read()) {
-            console.log(response)
-            self.emit('response', response['48']);
+//            console.log(response)
+//            self.emit('response', response['48']);
+            self.emit('response', response);
         }
     });
 
