@@ -33,6 +33,7 @@ var net = require('net');
 var Concentrate = require("concentrate");
 var encoder = require('./encoder');
 var createDecoder = require('./decoder');
+var createISOParser = require('./ISOParser');
 
 var util = require('util');
 var EventEmitter = require('events').EventEmitter;
@@ -50,8 +51,16 @@ exports.connect = connect;
 function connect(port, host, connectionListener) {
     var socket = new net.Socket();
     var decoder = createDecoder();
+    var ISOParser = createISOParser();
 
-    socket.on('data', function(data) {
+    decoder.on("readable", function () {
+        var response;
+        while (response = decoder.read()) {
+            ISOParser.write(response);
+        }
+    });
+
+    socket.on('data', function (data) {
         try {
             decoder.write(data);
         } catch (e) {
@@ -60,13 +69,13 @@ function connect(port, host, connectionListener) {
         }
     });
 
-    socket.on('error', function(error) {
+    socket.on('error', function (error) {
         connectionListener(error);
     });
 
-    socket.connect(port, host, function() {
+    socket.connect(port, host, function () {
         console.log('Client Connected');
-        connectionListener(null, new Connection(socket, decoder));
+        connectionListener(null, new Connection(socket, ISOParser));
     });
 }
 
@@ -75,33 +84,35 @@ function connect(port, host, connectionListener) {
  * Class Connection extends  EventEmitter
  */
 util.inherits(Connection, EventEmitter);
-function Connection(socket, decoder){
+function Connection(socket, ISOParser) {
     EventEmitter.call(this);
     this.socket = socket;
-    this.decoder = decoder;
+    this.ISOParser = ISOParser;
     var self = this;
-    
-    socket.on('close', function() {
+
+    socket.on('close', function () {
         console.log('Client Disconnected');
-        if(self.ended !== true)
+        if (self.ended !== true)
             self.emit('close');
     });
-    
-    decoder.on("readable", function() {
+
+    ISOParser.on("readable", function () {
         var response;
-        while (response = decoder.read()) {
-            self.emit('response', response);
+        while (response = ISOParser.read()) {
+            console.log(response)
+            self.emit('response', response['48']);
         }
-    });    
-    
+    });
+
 }
 
-Connection.prototype.request = function(message, callback) {
-    this.socket.write(encoder.encode(message), null, function(){
-        if(callback) callback();
+Connection.prototype.request = function (message, callback) {
+    this.socket.write(encoder.encode(message), null, function () {
+        if (callback)
+            callback();
     });
 };
-Connection.prototype.end = function(){
+Connection.prototype.end = function () {
     this.ended = true;
     this.socket.destroy();
 };
