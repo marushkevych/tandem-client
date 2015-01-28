@@ -11,11 +11,12 @@ module.exports = function createParser(){
                 .string('11', 6)
                 .string('12', 12)
                 .string('24', 3)
-                .string('42', 15)
+                .string('39', 3)
                 .string('length_48', 3)
                 .tap(function() {
             
-            // then read field 48
+            // expected response bitmap: 02 30 01 00 02 01 00 00
+            console.log('bitmap', this.vars.bitmap)
             
             this.string('48', parseInt(this.vars.length_48, 10))
 
