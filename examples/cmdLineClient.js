@@ -8,7 +8,7 @@ client.connect(1338, 'localhost', function (err, connection) {
     }
 
     connection.on('response', function (response) {
-        console.log('response: ', response);
+        console.log('response: ', JSON.stringify(response, null, 4));
     });
 
     connection.on('close', function () {
