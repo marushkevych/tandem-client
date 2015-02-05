@@ -18,7 +18,6 @@ exports.encode = function(message){
             .result();
     
     var field48 = Concentrate()
-            .string("043", "ascii") // length
             .string("XXXXYYYYMMHHMMSSmm", "ascii") // loyalty-transaction-id
             .string("123", "ascii") // batch number
             .string("1234", "ascii") // ticket number
