@@ -25,10 +25,6 @@ module.exports = function createParser(){
                         .int8('detailsBitmap');
 
                 this.tap(function(){
-                    console.log('redemption bitmap', this.vars.detailsBitmap )
-                    console.log('BITMASK_LOYALTY_REDEMPTION bitmap result', this.vars.detailsBitmap & BITMASK_LOYALTY_REDEMPTION )
-                    console.log('BITMASK_LOYALTY_POINTS bitmap result', this.vars.detailsBitmap & BITMASK_LOYALTY_POINTS )
-                    console.log('BITMASK_CPL_REDEMPTION bitmap result', this.vars.detailsBitmap & BITMASK_CPL_REDEMPTION )
 
                     if(isLoyaltyRedemptionDetailPresent(this.vars.detailsBitmap)){
                         this.tap('LoyaltyRedemptionDetail', function(){
@@ -70,6 +66,12 @@ module.exports = function createParser(){
                             })
                         });
                     }
+                    
+                    if(isCPLRedemptionDetailPresent(this.vars.detailsBitmap)){
+                        this.tap('CPLRedemptionDetail', function(){
+                            
+                        });
+                    }
 
                     this.tap(function(){
 
@@ -89,13 +91,13 @@ module.exports = function createParser(){
     return decoder;
 };
 
-var BITMASK_LOYALTY_REDEMPTION = 16;
-var BITMASK_LOYALTY_POINTS = 8;
-var BITMASK_CPL_REDEMPTION = 4;
 
 var isLoyaltyRedemptionDetailPresent = function(detailBItmap){
-    return (detailBItmap & BITMASK_LOYALTY_REDEMPTION) > 0;
+    return (detailBItmap & 16) > 0;
 }
 var isLoyaltyPointsEarnedDetailPresent = function(detailBItmap){
-    return (detailBItmap & BITMASK_LOYALTY_POINTS) > 0;
+    return (detailBItmap & 8) > 0;
+}
+var isCPLRedemptionDetailPresent = function(detailBItmap){
+    return (detailBItmap & 4) > 0;
 }
