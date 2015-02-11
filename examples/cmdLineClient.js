@@ -1,6 +1,6 @@
 
 var client = require('../index').createClient();
-client.connect(1338, 'localhost', function (err, connection) {
+client.connect(18889, 'localhost', function (err, connection) {
 
     if (err) {
         console.log('Can not connect to listener');

@@ -32,7 +32,6 @@
 var net = require('net');
 var Concentrate = require("concentrate");
 var encoder = require('./encoder');
-var createDecoder = require('./decoder');
 var createISOParser = require('./ISOParser');
 
 var util = require('util');
@@ -50,19 +49,11 @@ exports.connect = connect;
  */
 function connect(port, host, connectionListener) {
     var socket = new net.Socket();
-    var decoder = createDecoder();
     var ISOParser = createISOParser();
-
-    decoder.on("readable", function () {
-        var response;
-        while (response = decoder.read()) {
-            ISOParser.write(response);
-        }
-    });
 
     socket.on('data', function (data) {
         try {
-            decoder.write(data);
+            ISOParser.write(data);
         } catch (e) {
             console.log("Decoding error, dropping connection", e.stack);
             socket.destroy();
