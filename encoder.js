@@ -1,7 +1,7 @@
 var Concentrate = require("concentrate");
 var crc32 = require('buffer-crc32');
 
-exports.encode = function(message){
+exports.encode = function(loyaltyTransactionId){
     
 //    var body = Concentrate().string(message, "utf8").result();
 
@@ -18,7 +18,7 @@ exports.encode = function(message){
             .result();
     
     var field48 = Concentrate()
-            .string("XXXXYYYYMMHHMMSSmm", "ascii") // loyalty-transaction-id
+            .string(loyaltyTransactionId, "ascii") // loyalty-transaction-id
             .string("123", "ascii") // batch number
             .string("1234", "ascii") // ticket number
             .string("123456789012345678", "ascii") // GLG-record-key

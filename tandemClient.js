@@ -1,6 +1,14 @@
 
-var client = require('../index').createClient();
-client.connect(1339, 'localhost', function (err, connection) {
+var client = require('./index').createClient();
+var prompt = "please enter loyalty-transaction-id in the format: XXXXYYYYMMHHMMSSmm: "
+if(process.argv.length < 4){
+    console.log('Please provide host and port: node tandemClient.js host port')
+    process.exit(0);
+}
+
+var host = process.argv[2];
+var port = process.argv[3];
+client.connect(port, host, function (err, connection) {
 
     if (err) {
         console.log('Can not connect to listener');
@@ -9,6 +17,7 @@ client.connect(1339, 'localhost', function (err, connection) {
 
     connection.on('response', function (response) {
         console.log('response: ', JSON.stringify(response, null, 4));
+        process.stdout.write(prompt);
     });
 
     connection.on('close', function () {
@@ -16,7 +25,7 @@ client.connect(1339, 'localhost', function (err, connection) {
         process.exit(0);
     });
 
-    process.stdout.write("Client connected, please enter your request. Enter 'exit' to quit\n");
+    console.log("Client connected", prompt);
 
     process.stdin.setEncoding('utf8');
 
@@ -30,6 +39,12 @@ client.connect(1339, 'localhost', function (err, connection) {
         if (chunk == 'exit') {
             connection.end();
             process.exit(0);
+        }
+        
+        if(chunk.trim().length != 18){
+            console.log('invalid loyalty-transaction-id')
+            console.log(prompt);
+            return;
         }
 
         connection.request(chunk);
