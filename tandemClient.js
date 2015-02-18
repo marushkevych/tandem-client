@@ -25,7 +25,7 @@ client.connect(port, host, function (err, connection) {
         process.exit(0);
     });
 
-    console.log("Client connected", prompt);
+    console.log(prompt);
 
     process.stdin.setEncoding('utf8');
 
