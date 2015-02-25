@@ -32,10 +32,11 @@
 var net = require('net');
 var Concentrate = require("concentrate");
 var encoder = require('./encoder');
-var createISOParser = require('./ISOParser');
+var MessageDecoder = require('./decoder/MessageDecoder');
 
 var util = require('util');
 var EventEmitter = require('events').EventEmitter;
+
 
 
 exports.connect = connect;
@@ -49,11 +50,14 @@ exports.connect = connect;
  */
 function connect(port, host, connectionListener) {
     var socket = new net.Socket();
-    var ISOParser = createISOParser();
-
+    var connection = new Connection(socket);
+    var messageDecoder = new MessageDecoder(function(data){
+        connection.emit('response', data);
+    });
+    
     socket.on('data', function (data) {
         try {
-            ISOParser.write(data);
+            messageDecoder.decode(data);
         } catch (e) {
             console.log("Decoding error, dropping connection", e.stack);
             socket.destroy();
@@ -66,7 +70,7 @@ function connect(port, host, connectionListener) {
 
     socket.connect(port, host, function () {
         console.log('Client Connected');
-        connectionListener(null, new Connection(socket, ISOParser));
+        connectionListener(null, connection);
     });
 }
 
@@ -75,25 +79,15 @@ function connect(port, host, connectionListener) {
  * Class Connection extends  EventEmitter
  */
 util.inherits(Connection, EventEmitter);
-function Connection(socket, ISOParser) {
+function Connection(socket) {
     EventEmitter.call(this);
     this.socket = socket;
-    this.ISOParser = ISOParser;
     var self = this;
 
     socket.on('close', function () {
         console.log('Client Disconnected');
         if (self.ended !== true)
             self.emit('close');
-    });
-
-    ISOParser.on("readable", function () {
-        var response;
-        while (response = ISOParser.read()) {
-//            console.log(response)
-//            self.emit('response', response['48']);
-            self.emit('response', response);
-        }
     });
 
 }

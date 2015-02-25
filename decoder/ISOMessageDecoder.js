@@ -1,12 +1,12 @@
 var Dissolve = require("dissolve");
 
-module.exports = function createParser(){
+function createParser(){
     
     var decoder = Dissolve().loop(function(end) {
         
         // first read header with length
-        this.int16be('header').tap(function() {
-            console.log("got header with length", this.vars.header);
+//        this.int16be('header').tap(function() {
+//            console.log("got header with length", this.vars.header);
             
             this.tap('isoMessage', function(){
                 this.string('MTI', 4)
@@ -95,7 +95,7 @@ module.exports = function createParser(){
                     })
                 })
             });
-        });
+//        });
     });
     
     return decoder;
@@ -111,3 +111,24 @@ var isLoyaltyPointsEarnedDetailPresent = function(detailBItmap){
 var isCPLRedemptionDetailPresent = function(detailBItmap){
     return (detailBItmap & 4) > 0;
 }
+
+
+
+// constructor function
+var ISOMessageDecoder = module.exports = function(callback){
+    var parser = createParser();
+    
+    parser.on("readable", function () {
+        var response;
+        while (response = parser.read()) {
+            callback(response);
+        }
+    });
+    
+    return {
+        decode: function(data){
+            parser.write(data);
+        }
+    }
+    
+};

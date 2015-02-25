@@ -1,6 +1,6 @@
 'use strict';
 var net = require('net');
-var createDecoder = require('./ISOParser');
+var createDecoder = require('./decoder/MessageDecoder');
 var encoder = require('./encoder');
 var Q = require('q');
 

@@ -17,9 +17,10 @@
   },
   "homepage": "https://github.com/marushkevych/tandem-listener",
   "dependencies": {
-    "dissolve": "^0.3.3",
     "buffer-crc32": "^0.2.5",
     "concentrate": "^0.2.2",
-    "q": "^1.1.2"
+    "dissolve": "^0.3.3",
+    "q": "^1.1.2",
+    "request": "^2.53.0"
   }
 }
