@@ -33,6 +33,7 @@ function generate1604(){
             .result();
     
     var field48 = Concentrate()
+            .string("0043", "ascii") // length of field 48
             .string("XXXXYYYYMMHHMMSSmm", "ascii") // loyalty-transaction-id
             .string("123", "ascii") // batch number
             .string("1234", "ascii") // ticket number
