@@ -1,25 +1,18 @@
 var Concentrate = require("concentrate");
 var crc32 = require('buffer-crc32');
 
-exports.encode = function(mti){
+exports.encode = function(reconcilliationId){
     
 //    var body = Concentrate().string(message, "utf8").result();
 
-    
-    
-    switch (mti){
-           
-        case '1804':
-           return generate1804(); 
-           
-        default:
-            return generate1604();
-         
+    if(reconcilliationId){
+        return generate1604(reconcilliationId);
     }
     
+    return generate1804();
 };
 
-function generate1604(){
+function generate1604(reconcilliationId){
     var bitMap = new Buffer("0230010000410000", "hex");
     
     var fixedFields = Concentrate()
@@ -34,7 +27,7 @@ function generate1604(){
     
     var field48 = Concentrate()
             .string("0043", "ascii") // length of field 48
-            .string("XXXXYYYYMMHHMMSSmm", "ascii") // loyalty-transaction-id
+            .string(reconcilliationId, "ascii") // loyalty-transaction-id
             .string("123", "ascii") // batch number
             .string("1234", "ascii") // ticket number
             .string("123456789012345678", "ascii") // GLG-record-key

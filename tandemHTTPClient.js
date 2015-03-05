@@ -57,6 +57,7 @@ process.stdin.on('readable', function () {
             console.log('error: ', response.statusCode);
         }
         
+        console.log("got buffer:",Buffer.isBuffer(body));
         console.log("got response",body);
         isoMessageDecoder.decode(body);
   

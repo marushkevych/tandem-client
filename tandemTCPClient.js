@@ -1,6 +1,6 @@
 
 var client = require('./index').createClient();
-var prompt = "please enter 4 digit Message Type Indicator (1604 or 1804)";
+var prompt = "please enter 18 character reconcilliationId";
 if(process.argv.length < 4){
     console.log('Please provide host and port: node tandemClient.js host port')
     process.exit(0);
@@ -17,7 +17,7 @@ client.connect(port, host, function (err, connection) {
 
     connection.on('response', function (response) {
         console.log('response: ', JSON.stringify(response, null, 4));
-        process.stdout.write(prompt);
+        console.log(prompt);
     });
 
     connection.on('close', function () {
@@ -41,13 +41,12 @@ client.connect(port, host, function (err, connection) {
             process.exit(0);
         }
         
-//        if(chunk.trim().length != 18){
-//            console.log('invalid loyalty-transaction-id')
-//            console.log(prompt);
-//            return;
-//        }
+        if(chunk.trim().length == 18){
+            connection.request(chunk);
+        } else {
+            connection.request();
+        }
 
-        connection.request(chunk);
     });
 
 });
