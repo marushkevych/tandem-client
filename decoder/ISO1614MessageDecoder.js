@@ -12,7 +12,7 @@ function createParser(){
                         .string('posDateAndTime', 12)
                         .string('functionCode', 3)
                         .string('actionCode', 3)
-                        .string('length_48', 3);
+                        .string('length_48', 4);
 
                 this.tap('field48', function() {
                     this.string('actionIndicator', 1)
