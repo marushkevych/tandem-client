@@ -56,6 +56,7 @@ function connect(port, host, connectionListener) {
     });
     
     socket.on('data', function (data) {
+        console.log('response:', data.toString())
         try {
             messageDecoder.decode(data);
         } catch (e) {
