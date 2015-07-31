@@ -6,7 +6,8 @@ tandem-client
 
 #### Install: 
 ```
-npm install tandem-client
+cd tandem-client
+npm install
 ```
 
 #### Run TCP client:
