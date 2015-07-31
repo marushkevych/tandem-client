@@ -1,8 +1,8 @@
 
 var client = require('./index').createClient();
-var prompt = "please enter 18 character reconcilliationId";
+var prompt = "please enter 18 character Reconciliation ID";
 if(process.argv.length < 4){
-    console.log('Please provide host and port: node tandemClient.js host port')
+    console.log('Please provide host and port: node tandemTCPClient.js host port')
     process.exit(0);
 }
 

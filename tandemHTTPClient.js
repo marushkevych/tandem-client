@@ -8,9 +8,9 @@ var isoMessageDecoder = new ISOMessageDecoder(function(data){
     console.log(prompt);
 });
 
-var prompt = "please enter 4 digit Message Type Indicator (1604 or 1804)";
+var prompt = "please enter 18 character Reconciliation ID";
 if(process.argv.length < 4){
-    console.log('Please provide host and port: node tandemClient.js host port')
+    console.log('Please provide host and port: node tandemHTTPClient.js host port')
     process.exit(0);
 }
 

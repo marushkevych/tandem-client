@@ -1,21 +1,21 @@
 {
-  "name": "tandem-listener",
+  "name": "tandem-client",
   "version": "1.0.0",
-  "description": "Node prototype for the pcats listener.",
+  "description": "Node tcp and http clients to simulate tandem request",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/marushkevych/tandem-listener.git"
+    "url": "https://github.com/marushkevych/tandem-client.git"
   },
   "author": "Andrey Marushkevych marushkevych@gmail.com (marushkevych.com)",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/marushkevych/tandem-listener/issues"
+    "url": "https://github.com/marushkevych/tandem-client/issues"
   },
-  "homepage": "https://github.com/marushkevych/tandem-listener",
+  "homepage": "https://github.com/marushkevych/tandem-client",
   "dependencies": {
     "buffer-crc32": "^0.2.5",
     "concentrate": "^0.2.2",

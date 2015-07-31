@@ -12,7 +12,11 @@
  * - emits 'close' event if tcp connection was closed before connection.end() was called
  * 
  * Example:
- * require('./Client').connect(port, host, function(connection) {
+ * require('./Client').connect(port, host, function(err, connection) {
+ *      if(err){
+ *          // handle connection error
+ *           return;
+ *      }
  * 
  *      connection.on('response', function(response){
  *          console.log('got response', response);
