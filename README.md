@@ -1,4 +1,4 @@
-pcats-listener
+tandem-listener
 =================
 > TCP listener, provides message decoding and encoding using proprietary binary protocol.
 
