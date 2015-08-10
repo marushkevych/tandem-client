@@ -2,7 +2,7 @@ tandem-client
 =================
 > Provides TCP client to generate tandem reconciliation TCP request
 
-> Also provides HTTP client to generate tandem reconciliation request proxied through http proxy
+> Also provides HTTP client to simulate tandem reconciliation request proxied through http proxy
 
 #### Install: 
 ```
